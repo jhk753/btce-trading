@@ -82,4 +82,4 @@ def compute_profit_and_volume_for_one_opportunity(opportunity, tax, max_volume, 
                 max_volume = min(volume, max_volume) / price * tax
 
     max_volume /= (tax * tax * tax)
-    return [max_volume, profit]
+    return max_volume, profit
