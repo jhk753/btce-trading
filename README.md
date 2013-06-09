@@ -1,3 +1,9 @@
+btce-trading
+============
+
+based on Alan McIntyre work
+His instruction on the btce-api below
+
 btce-api
 ========
 
