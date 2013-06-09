@@ -9,5 +9,6 @@ sum_profit = 0
 while True:
     p = compute_opportunities.detect_opportunity()
     sum_profit += p
-    print( str(strftime("%d-%b-%Y-%H-%M-%S", gmtime())) + "  " + str(p) + " " + str(sum_profit), file = f)
+    if p>0:
+        print( str(strftime("%d-%b-%Y-%H-%M-%S", gmtime())) + "  " + str(p) + " " + str(sum_profit), file = f)
     time.sleep(1)

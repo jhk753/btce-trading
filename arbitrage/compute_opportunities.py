@@ -63,7 +63,4 @@ def detect_opportunity():
             print ""
             sum_profit += (profit-1) * max_volume
 
-    if num == 0:
-        print "no opportunity " + t
-
     return sum_profit
