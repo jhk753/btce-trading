@@ -2,6 +2,9 @@ btce-trading
 ============
 
 based on Alan McIntyre work
+
+python real_trading.py api-key api-secret
+
 His instruction on the btce-api below
 
 btce-api
