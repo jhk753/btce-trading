@@ -2,6 +2,15 @@ from __future__ import print_function
 from time import strftime, gmtime
 import time
 import compute_opportunities
+import sys
+
+if len(sys.argv) < 2:
+    print("Usage: print-trans-history.py <key file>")
+    print("    key file - Path to a file containing key/secret/nonce data")
+    sys.exit(1)
+
+key_file = sys.argv[1]
+
 
 f = open('sum_profit_' + str(strftime("%d-%b-%Y-%H-%M-%S", gmtime())) + '.txt','w')
 i=0
@@ -23,7 +32,7 @@ init_volume = 100
 
 
 while True:
-    p = compute_opportunities.start_trade(opportunities, tax, init_volume, False)
+    p = compute_opportunities.start_trade(opportunities, tax, init_volume, True, key_file)
     sum_profit += p
     if p>0:
         print( str(strftime("%d-%b-%Y-%H-%M-%S", gmtime())) + "  " + str(p) + " " + str(sum_profit), file = f)
