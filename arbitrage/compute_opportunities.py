@@ -50,11 +50,12 @@ def detect_opportunity():
             volume = float(volumes[operation[0]][operation[1]])
             if operation[0] == "bid":
                 profit *= price
-                max_volume = min(volume, max_volume) * price
+                max_volume = min(volume, max_volume) * price * tax
             if operation[0] == "ask":
                 profit /= price
-                max_volume = min(volume, max_volume) / price
+                max_volume = min(volume, max_volume) / price * tax
 
+        max_volume /= (tax * tax * tax)
         if profit-1>0:
             num+=1
             print name + " " + t
