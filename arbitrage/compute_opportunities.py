@@ -6,7 +6,7 @@ from time import strftime, gmtime
 
 import btceapi
 
-def start_trade(opportunities, tax, init_volume, real_trade, key_file="no_file"):
+def start_trade(opportunities, tax, init_volume, real_trade, key_file):
     init_profit = float(1.)
     sum_profit = 0
     for name, opportunity in opportunities.items():
@@ -15,7 +15,7 @@ def start_trade(opportunities, tax, init_volume, real_trade, key_file="no_file")
         t = str(strftime("%a, %d %b %Y %H:%M:%S", gmtime()))
         max_volume, profit = compute_profit_and_volume_for_one_opportunity(opportunity, tax, init_volume, init_profit, prices, volumes)
         if profit-1>0:
-            if real_trade:
+            if real_trade == "True":
                 trade(opportunity, max_volume, key_file, prices, volumes, tax)
                 print "traded: "
             print name + " " + t
