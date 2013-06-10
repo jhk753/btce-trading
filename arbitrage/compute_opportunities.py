@@ -1,5 +1,4 @@
 import sys
-from objc._objc import NULL
 import pylab
 import numpy as np
 import time
@@ -7,7 +6,7 @@ from time import strftime, gmtime
 
 import btceapi
 
-def start_trade(opportunities, tax, init_volume, real_trade, key_file=NULL):
+def start_trade(opportunities, tax, init_volume, real_trade, key_file="no_file"):
     init_profit = float(1.)
     sum_profit = 0
     for name, opportunity in opportunities.items():
