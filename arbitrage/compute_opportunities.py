@@ -14,7 +14,6 @@ def start_trade(opportunities, tax, init_volume, real_trade, key_file):
         prices, volumes = get_prices_and_volumes(pairs)
         t = str(strftime("%a, %d %b %Y %H:%M:%S", gmtime()))
         max_volume, profit = compute_profit_and_volume_for_one_opportunity(opportunity, tax, init_volume, init_profit, prices, volumes)
-        print(max_volume)
         if profit-1 > 0.01 and max_volume > 0.1:
             if real_trade == "True":
                 trade(opportunity, float(0.1), key_file, prices, volumes, tax)
