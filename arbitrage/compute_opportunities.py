@@ -17,7 +17,7 @@ def start_trade(opportunities, tax, init_volume, real_trade, key_file):
         print(max_volume)
         if profit-1 > 0.01 and max_volume > 0.1:
             if real_trade == "True":
-                trade(opportunity, max_volume, key_file, prices, volumes, tax)
+                trade(opportunity, float(0.1), key_file, prices, volumes, tax)
                 print "traded: "
             print name + " " + t
             print "profit: " + str(round(profit-1, 3) * 100) + "%"
