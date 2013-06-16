@@ -23,7 +23,6 @@ def start_trade(opportunities, tax, init_volume, real_trade, key_file):
             print "absolute BTC volume in the end: "+ str(round(max_volume, 3))
             print ""
             sum_profit += (profit-1) * max_volume
-        return
     return sum_profit
 
 
@@ -79,5 +78,3 @@ def trade(opportunity, max_volume, key_file, prices, volumes, tax):
             volume /= price
             results = t.trade(pair, "buy", price, volume)
             volume *= tax
-        print(results)
-        return
