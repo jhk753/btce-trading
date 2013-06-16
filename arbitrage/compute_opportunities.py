@@ -14,7 +14,7 @@ def start_trade(opportunities, tax, init_volume, real_trade, key_file):
         prices, volumes = get_prices_and_volumes(pairs)
         t = str(strftime("%a, %d %b %Y %H:%M:%S", gmtime()))
         max_volume, profit = compute_profit_and_volume_for_one_opportunity(opportunity, tax, init_volume, init_profit, prices, volumes)
-        if profit-1>0:
+        if profit-1>0 & max_volume>0.1:
             if real_trade == "True":
                 trade(opportunity, max_volume, key_file, prices, volumes, tax) #won't work because volume is too low
                 print "traded: "
@@ -46,8 +46,15 @@ def get_prices_and_volumes(pairs):
 
 
 
-def compute_profit_and_volume_for_one_opportunity(opportunity, tax, max_volume, profit, prices, volumes):
+def compute_profit_and_volume_for_one_opportunity(opportunity, init_tax, max_volume, profit, prices, volumes):
+    tag = 0
+    special_tax = float(0.995)
     for operation in opportunity:
+            pair = operation[1]
+            tax = init_tax
+            if pair == "usd_rur":
+                tax = special_tax
+                tag = 1
             profit *= tax
             price = float(prices[operation[0]][operation[1]])
             volume = float(volumes[operation[0]][operation[1]])
@@ -58,7 +65,11 @@ def compute_profit_and_volume_for_one_opportunity(opportunity, tax, max_volume, 
                 profit /= price
                 max_volume = min(volume, max_volume) / price * tax
 
-    max_volume /= (tax * tax * tax)
+
+    max_volume /= (init_tax * init_tax)
+    if tag == 1:
+        max_volume /= special_tax
+    else: max_volume /= init_tax
     return max_volume, profit
 
 
