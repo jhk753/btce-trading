@@ -16,13 +16,14 @@ def start_trade(opportunities, tax, init_volume, real_trade, key_file):
         max_volume, profit = compute_profit_and_volume_for_one_opportunity(opportunity, tax, init_volume, init_profit, prices, volumes)
         if profit-1>0:
             if real_trade == "True":
-                trade(opportunity, max_volume, key_file, prices, volumes, tax)
+                trade(opportunity, max_volume, key_file, prices, volumes, tax) #won't work because volume is too low
                 print "traded: "
             print name + " " + t
             print "profit: " + str(round(profit-1, 3) * 100) + "%"
             print "absolute BTC volume in the end: "+ str(round(max_volume, 3))
             print ""
             sum_profit += (profit-1) * max_volume
+        return
     return sum_profit
 
 
@@ -65,15 +66,18 @@ def compute_profit_and_volume_for_one_opportunity(opportunity, tax, max_volume, 
 def trade(opportunity, max_volume, key_file, prices, volumes, tax):
     handler = btceapi.KeyHandler(key_file, resaveOnDeletion=True)
     volume = max_volume
-    for key in handler.getKeys():
-        t = btceapi.TradeAPI(key, handler=handler)
-        for operation in opportunity:
-            pair = operation[1]
-            price = float(prices[operation[0]][operation[1]])
-            if operation[0] == "bid":
-                results = t.trade(pair, "sell", price, volume)
-                volume *= price * tax
-            if operation[0] == "ask":
-                volume = volume /price
-                results = t.trade(pair, "buy", price, volume)
-                volume *= tax
+    keys = handler.getKeys()
+    key = keys[0]
+    t = btceapi.TradeAPI(key, handler=handler)
+    for operation in opportunity:
+        pair = operation[1]
+        price = float(prices[operation[0]][operation[1]])
+        if operation[0] == "bid":
+            results = t.trade(pair, "sell", price, volume)
+            volume *= price * tax
+        if operation[0] == "ask":
+            volume /= price
+            results = t.trade(pair, "buy", price, volume)
+            volume *= tax
+        print(results)
+        return
