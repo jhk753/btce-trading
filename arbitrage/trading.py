@@ -44,4 +44,4 @@ while True:
     sum_profit += p
     if p>0:
         print( str(strftime("%d-%b-%Y-%H-%M-%S", gmtime())) + "  " + str(p) + " " + str(sum_profit), file = f)
-    time.sleep(10)
+    time.sleep(15)
